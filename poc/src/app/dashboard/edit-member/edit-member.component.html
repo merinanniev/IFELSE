@@ -1,0 +1,48 @@
+<h1 mat-dialog-title>Team Member </h1>
+<div mat-dialog-content fxLayout="column">
+    <div>
+        <div>
+            Name
+        </div>
+        <div>
+            <input class="input-box" matinput
+                [value]="memberInfo['name'].first_name + ' ' + memberInfo['name'].last_name" [disabled]="true">
+        </div>
+    </div>
+    <div>
+        <div>
+            Status
+        </div>
+        <div>
+            <input class="input-box" matinput [value]="memberInfo.status" [disabled]="true">
+        </div>
+    </div>
+    <div>
+        <div>
+            Role
+        </div>
+        <div>
+            <input class="input-box" matinput [value]="memberInfo.role" [disabled]="true">
+        </div>
+    </div>
+    <div>
+        <div>
+            License Used
+        </div>
+        <div>
+            <input class="input-box" matinput [value]="memberInfo.license_used" [disabled]="true">
+        </div>
+    </div>
+    <div>
+        <div>
+            Teams:
+        </div>
+        <div *ngFor="let team of memberInfo.teams;let i = index">
+            Team {{i+1}}
+            <input class="input-box" matinput [value]="team.value" [disabled]="true">
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions fxLayoutAlign="end" class="action-box">
+    <button class="button" [mat-dialog-close]="" cdkFocusInitial>Ok</button>
+</div>

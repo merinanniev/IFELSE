@@ -1,0 +1,17 @@
+.right-container {
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.main-container {
+    height: 100%;
+}
+
+.right-container::-webkit-scrollbar {
+    display: none;
+}
+
+.right-container {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}

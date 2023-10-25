@@ -1,0 +1,158 @@
+<div class="container" fxLayout="column" fxLayoutGap="33px">
+    <div class="header" fxLayout="row" fxLayoutAlign="space-between">
+        <div class="heading">
+            Welcome back, Olivia
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="13px">
+            <span class="material-symbols-outlined">search</span>
+            <button class="button">
+                <span class="material-symbols-outlined">Page_Info</span> Customise
+            </button>
+            <button class="button">
+                <span class="material-symbols-outlined">Cloud_Download</span> Export
+            </button>
+        </div>
+    </div>
+    <div class="graph-containers" fxLayout="row" fxLayoutGap="1%">
+        <div class="graph-container1" fxLayout="column" fxFlex="70%" fxLayoutGap="20px">
+            <div fxLayout="row" class="container-box" fxLayoutAlign="space-between center">
+                <div fxLayout="row">
+                    <li><a href="#"><span class="material-symbols-outlined deploy">Deployed_Code</span></a></li>
+                    <div fxLayout="column" fxLayoutAlign="center">
+                        <div>
+                            <span class="graph-header">Vendor Breakdown</span>
+                        </div>
+                        <div>
+                            <span class="graph-title">Keep track of vendors and their security readings</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <span class="material-symbols-outlined icon">More_Vert</span>
+                </div>
+            </div>
+            <div id="container1">
+            </div>
+            <div fxLayout="row" fxLayoutAlign="end" class="button-box">
+                <button class="button">
+                    View Full Report
+                </button>
+            </div>
+        </div>
+        <div class="graph-container1" fxLayout="column" fxFlex="29%">
+            <div fxLayout="column" fxLayoutGap="20px">
+                <div fxLayout="row" class="container-box" fxLayoutAlign="space-between center">
+                    <div fxLayout="row" class="inner-box">
+                        <div fxLayout="column" fxLayoutAlign="center">
+                            <div>
+                                <span class="graph-header">Vendor Breakdown</span>
+                            </div>
+                            <div>
+                                <span class="graph-title">You are using 80% of available spots</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="material-symbols-outlined icon">More_Vert</span>
+                    </div>
+                </div>
+                <div id="container2">
+
+                </div>
+                <div>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="end" class="button-box">
+                    <button class="button">
+                        <span class="material-symbols-outlined icon">Bolt</span>Upgrade Plan
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="table-container" fxLayout="column">
+        <div fxLayout="row" class="container-box" fxLayoutAlign="space-between center" fxFlex="73px">
+            <div fxLayout="row" class="inner-box">
+                <div fxLayout="row" fxLayoutAlign=" center center" fxLayoutGap="8px">
+                    <div>
+                        <span class="graph-header">Team Members</span>
+                    </div>
+                    <div>
+                        <span class="user-no">{{tableLength}} Users</span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <span class="material-symbols-outlined icon">More_Vert</span>
+            </div>
+        </div>
+        <div>
+
+            <table mat-table [dataSource]="dataSource" class="team-table">
+                <ng-container matColumnDef="select">
+                    <th mat-header-cell *matHeaderCellDef class="table-header select">
+                        <mat-checkbox [(ngModel)]="select_all" (ngModelChange)="onSelectAll($event)">
+                        </mat-checkbox>
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="select">
+                        <mat-checkbox [(ngModel)]="element.isselected"></mat-checkbox>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef class="table-header name"> {{columnHeader['name']}} </th>
+                    <td mat-cell *matCellDef="let row" class="img_preview">{{row['name'].first_name}}
+                        {{row['name'].last_name}}</td>
+                </ng-container>
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef class="table-header-icon"><span
+                            class="material-symbols-outlined icon"
+                            style="font-size:20px;">Arrow_Downward</span>{{columnHeader['status']}}</th>
+                    <td mat-cell *matCellDef="let row">
+                        <span class="team-box"
+                            [ngStyle]="{'background-color': row.status == 'Customer' ? '#ddffdd':'#d3d3d3','border': row.status== 'Customer' ? '1px solid #018749':'1px solid #332e2e','color': row.status== 'Customer' ? '#018749':'#000'}">
+                            <span class="round">.</span>{{row.status}}
+                        </span>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="role">
+                    <th mat-header-cell *matHeaderCellDef class="table-header role"> {{columnHeader['role']}} </th>
+                    <td mat-cell *matCellDef="let row">{{row.role}}</td>
+                </ng-container>
+                <ng-container matColumnDef="license">
+                    <th mat-header-cell *matHeaderCellDef class="table-header license"> {{columnHeader['license_used']}}
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        <div fxLayout="row" fxLayoutAlign="start center" class="license-box">
+                            <div id="progressbar">
+                                <div [ngStyle]="{'width': row.license_used + '%'}"></div>
+                            </div>
+                            {{row.license_used}}%
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="teams">
+                    <th mat-header-cell *matHeaderCellDef class="table-header teams"> {{columnHeader['teams']}} </th>
+                    <td mat-cell *matCellDef="let row" class="team-container">
+                        <ng-container *ngFor="let team of row.teams">
+                            <span class="team-box"
+                                [ngStyle]="{'background-color': team.background_color, 'color': team.text_color,'border':'1px solid'+ team.text_color}">{{team.value}}</span>
+                        </ng-container>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef class="table-header action"> </th>
+                    <td mat-cell *matCellDef="let row">
+                        <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="14px">
+                            <span class="material-symbols-outlined icon" (click)="deleteTeamMember(row.id)">
+                                delete_outline
+                            </span>
+                            <span class="material-symbols-outlined icon" (click)="editTeamMember(row)">edit</span>
+                        </div>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator class="paginator" [pageSize]="10" [hidePageSize]="true"></mat-paginator>
+        </div>
+    </div>
+</div>
